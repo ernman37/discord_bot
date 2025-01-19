@@ -2,12 +2,14 @@ import discord
 import yaml
 
 from Client import Client
+from Chatter import Chatter 
+
 
 class Config():
 
     __ENV_FILE = '.env.yaml'
     __ENV_DISCORD_TOKEN_FIELD = 'discord_token'
-    __ENV_OPENAI_TOKEN_FIELD = 'openai_token'
+    __ENV_AI_TOKEN_FIELD = 'ai_token'
     __ENV_GUILD_ID_FIELD = 'guild_id'
 
     __CMD_PREFIX = '/'
@@ -17,10 +19,9 @@ class Config():
         self.__intents = self.__get_intents()
         env = self.__get_env()
         self.__discord_token = env[Config.__ENV_DISCORD_TOKEN_FIELD]
-        self.__openai_token = env[Config.__ENV_OPENAI_TOKEN_FIELD]
         guild_id = env[Config.__ENV_GUILD_ID_FIELD]
         self.__guild_id = discord.Object(id=guild_id)
-        self.__bot = Client(intents=self.__intents, command_prefix=Config.__CMD_PREFIX, guild_id=self.__guild_id)
+        self.__bot = Client(intents=self.__intents, command_prefix=Config.__CMD_PREFIX, guild_id=self.__guild_id, chatter=Chatter())
 
 
     def __get_intents(self) -> discord.Intents:
@@ -41,10 +42,6 @@ class Config():
 
     def get_discord_token(self) -> str:
         return self.__discord_token
-
-    
-    def get_openai_token(self) -> str:
-        return self.__openai_token
 
     
     def get_guild_id(self) -> discord.Object:

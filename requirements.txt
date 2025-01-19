@@ -1,2 +1,2 @@
 discord
-openai
+chatterbot==1.0.4
